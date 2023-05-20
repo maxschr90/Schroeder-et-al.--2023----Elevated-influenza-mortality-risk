@@ -10,6 +10,6 @@ All other functions are supplementary functions that are called in the execution
 For inquiries contact: Max Schroeder, email: m.schroeder.1@bham.ac.uk
 
 Please note:
-	1. The code includes two functions that were written by contributors to the mathworks community: i) AddLetters2Plots and ii) gini.
+	1. The code includes two functions that were written by contributors to the mathworks community: i) AddLetters2Plots and ii) shadeplot.
 	   We include these codes in line with the their usage policies, including the copyright notice and any further disclaimer 
 	   with the function. We are grateful to the authors for providing us with their work.
