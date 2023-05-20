@@ -9,5 +9,4 @@ Suggested citation:
 
 
 
-For inquiries contact:  Rebecca Mancy, email: Rebecca.Mancy@glasgow.ac.uk
-				Max Schroeder, email: m.schroeder.1@bham.ac.uk
+For inquiries contact:  Rebecca Mancy, email: Rebecca.Mancy@glasgow.ac.uk, Max Schroeder, email: m.schroeder.1@bham.ac.uk
