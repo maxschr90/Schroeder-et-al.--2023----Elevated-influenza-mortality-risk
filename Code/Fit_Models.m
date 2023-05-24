@@ -92,7 +92,7 @@ T1 = [table({ '\lambda', '\eta_{0}', 'd_{min}', 'd_{max}', 'Observations'}') T1]
 writetable(T1,'../Figures/Parameters.xlsx', 'Sheet', 'Base Model')
 
 
-% Model with estimated bounds
+% Model with estimated bounds (Table SI-B1)
 for n=1:14
     Parameters(:,n) = round([(Estimated_Bounds_Model(n).lambda) (Estimated_Bounds_Model(n).eta_zero) (Estimated_Bounds_Model(n).dmin) (Estimated_Bounds_Model(n).dmax) ],3);
 end

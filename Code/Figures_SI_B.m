@@ -1101,9 +1101,9 @@ plot(Influenza_EW(12:52,1), weibull_outbreakprob(Weibull_Model(10).w',MainWave(1
 plot(Influenza_EW(12:52,1), weibull_outbreakprob(Weibull_Model(10).w',MainWave(1)/3/10),'-x', 'Linewidth', 0.5, 'Markersize', 4 , 'Color', 'black')
 legend boxoff
 
-        leg=legend('2/3','1/2','1/3')
-        leg.ItemTokenSize = [9,4.5];
-        title(leg,{'Threshold relative', 'to average across', 'main waves'})
+leg=legend('2/3','1/2','1/3')
+leg.ItemTokenSize = [9,4.5];
+title(leg,{'Threshold relative', 'to average across', 'main waves'})
 
 xlim([1848,1890])
 xticks([1850:5:1890])
