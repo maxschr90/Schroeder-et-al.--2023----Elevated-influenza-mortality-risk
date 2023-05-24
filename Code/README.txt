@@ -5,7 +5,7 @@ The functions "Figure_*.m", "Fig_Scatter.R" and "Figures_SI_*.m" create the figu
 material.
 The function "Monte_Carlo.m" runs the Monte Carlo simulations using the parameters saved in "Monte_Carlo_Input.mat" and outputs the simulation results to "MC_output_v1.mat".
 The file "Fitted_Models_v1.mat" contains the fitted parameter values for all models.
-All other functions are supplementary functions that are called in the execution of the main functions.
+All other functions are supplementary functions that are called in the execution of the main functions. They are stored in the "Auxiliary" subfolder.
 
 For inquiries contact: Max Schroeder, email: m.schroeder.1@bham.ac.uk
 

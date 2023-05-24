@@ -3,6 +3,7 @@
 clear
 clc
 close all
+addpath Auxiliary\
 %%% 1. Load Data & Prepare Data
 Load_Data % Loads data for Cities cities from excel file
 
@@ -36,33 +37,8 @@ dmax_EW_1968 = max(Influenza_EW(131:end,2)');
 dmin_EW_1968 = min(Influenza_EW(131:end,2)');
 [Base_Model(n+6)] = est_parms_bpareto(Influenza_EW(134:end,2),dmax_EW_1968,dmin_EW_1968, 'England&Wales 1968');
 
-%%% 3. Estimate Model with common Bounds
-dmax_Cities = (max(dmax_Cities));
-dmin_Cities = (min(dmin_Cities));
-for n = 1:8
-    [Common_Bounds_Model(n)] = est_parms_bpareto(Influenza_Cities(26:end,n+1),dmax_Cities,dmin_Cities, citynames(n));
-end
 
-%%% 4. Estimate Model with theoretical Bounds
-
-for n = 1:8
-    [Theoretical_Bounds_Model(n)] = est_parms_bpareto(Influenza_Cities(26:end,n+1),1000000,1, citynames(n));
-end
-
-[Theoretical_Bounds_Model(n+1)] = est_parms_bpareto(Influenza_US(21:end,2),1000000,1, 'US');
-
-[Theoretical_Bounds_Model(n+2)] = est_parms_bpareto(Influenza_EW(12:52,2),1000000,1, 'England&Wales 1848');
-
-[Theoretical_Bounds_Model(n+3)] = est_parms_bpareto(Influenza_EW(55:80,2),1000000,1, 'England&Wales 1890');
-
-[Theoretical_Bounds_Model(n+4)] = est_parms_bpareto(Influenza_EW(83:119,2),1000000,1, 'England&Wales 1918');
-
-[Theoretical_Bounds_Model(n+5)] = est_parms_bpareto(Influenza_EW(123:130,2),1000000,1, 'England&Wales 1957');
-
-[Theoretical_Bounds_Model(n+6)] = est_parms_bpareto(Influenza_EW(134:end,2),1000000,1, 'England&Wales 1968');
-
-
-%%% 5. Estimate Model with estimated Bounds
+%%% 3. Estimate Model with estimated Bounds
 
 for n = 1:8
     [Estimated_Bounds_Model(n)] = est_parms_bpareto(Influenza_Cities(24:end,n+1),[],[], citynames(n));
@@ -80,7 +56,7 @@ end
 [Estimated_Bounds_Model(n+6)] = est_parms_bpareto(Influenza_EW(131:end,2),[],[], 'England&Wales 1968');
 
 
-%%% 6. Estimate Weibull Model
+%%% 4. Estimate Weibull Model
 %%% Deaths need to be rescaled for Weibull Distribution
 for n = 1:8
     [Weibull_Model(n)] = est_parms_weibull(Influenza_Cities(26:end,n+1)/10, citynames(n));
@@ -98,7 +74,7 @@ end
 [Weibull_Model(n+6)] = est_parms_weibull(Influenza_EW(134:end,2)/10, 'England&Wales 1968');
 
 
-%%% 7. Model Summary Tables
+%%% 5. Model Summary Tables
 % Base Model
 Obs = [sum(Influenza_Cities(26:end,2:9)==Influenza_Cities(26:end,2:9)), sum(Influenza_US(21:end,2)==Influenza_US(21:end,2)),sum(Influenza_EW(12:52,2)==Influenza_EW(12:52,2)),sum(Influenza_EW(55:80,2)==Influenza_EW(55:80,2)),sum(Influenza_EW(83:119,2)==Influenza_EW(83:119,2)),sum(Influenza_EW(123:130,2)==Influenza_EW(123:130,2)),sum(Influenza_EW(133:end,2)==Influenza_EW(133:end,2))];
 
@@ -113,21 +89,8 @@ for b =1:14
 end
 T1.Properties.VariableNames = names;
 T1 = [table({ '\lambda', '\eta_{0}', 'd_{min}', 'd_{max}', 'Observations'}') T1];
-writetable(T1,'../Figures/Table_3_v2.xlsx', 'Sheet', 'Base Model')
+writetable(T1,'../Figures/Parameters.xlsx', 'Sheet', 'Base Model')
 
-% Model with common bounds
-for n=1:8
-    Parameters(:,n) = round([(Common_Bounds_Model(n).lambda) (Common_Bounds_Model(n).eta_zero) (Common_Bounds_Model(n).dmin) (Common_Bounds_Model(n).dmax) ],3);
-end
-
-names = { 'Belfast', 'Birmingham' ,'Cardiff','Glasgow', 'Liverpool', 'London', 'Manchester', 'Sheffield'};
-
-for b =1:8
-    T2(:,b) = table([Parameters(:,b);Obs(b)]);
-end
-T2.Properties.VariableNames = names;
-T2 = [table({ '\lambda', '\eta_{0}', 'd_{min}', 'd_{max}', 'Observations'}') T2];
-writetable(T2,'../Figures/Table_3_v2.xlsx', 'Sheet', 'Common Bounds Model')
 
 % Model with estimated bounds
 for n=1:14
@@ -141,24 +104,10 @@ for b =1:14
 end
 T3.Properties.VariableNames = names;
 T3 = [table({ '\lambda', '\eta_{0}', 'd_{min}', 'd_{max}', 'Observations' }') T3];
-writetable(T3,'../Figures/Table_3_v2.xlsx', 'Sheet', 'Estimated Bounds Model')
+writetable(T3,'../Figures/Parameters.xlsx', 'Sheet', 'Estimated Bounds Model')
 
 
-% Model with theoretical bounds
-for n=1:14
-    Parameters(:,n) = round([(Theoretical_Bounds_Model(n).lambda) (Theoretical_Bounds_Model(n).eta_zero) (Theoretical_Bounds_Model(n).dmin) (Theoretical_Bounds_Model(n).dmax) ],3);
-end
-
-names = {'Belfast', 'Birmingham' ,'Cardiff','Glasgow', 'Liverpool', 'London', 'Manchester', 'Sheffield','US','England & Wales 1848','England & Wales 1890','England & Wales 1918','England & Wales 1957','England & Wales 1968'};
-
-for b =1:14
-    T4(:,b) = table([Parameters(:,b);Obs(b)]);
-end
-T4.Properties.VariableNames = names;
-T4 = [table({ '\lambda', '\eta_{0}', 'd_{min}', 'd_{max}', 'Observations'}') T4];
-writetable(T4,'../Figures/Table_3_v2.xlsx', 'Sheet', 'Theoretical Bounds Model')
-
-% Weibull
+% Weibull Model
 Parameters =[];
 for n=1:14
     Parameters(:,n) = round([(Weibull_Model(n).lambda) (Weibull_Model(n).eta_zero)  ],3);
@@ -171,9 +120,9 @@ for b =1:14
 end
 T5.Properties.VariableNames = names;
 T5 = [table({ '\lambda', '\eta_{0}', 'Observations'}') T5];
-writetable(T5,'../Figures/Table_3_v2.xlsx', 'Sheet', 'Weibull Model')
+writetable(T5,'../Figures/Parameters.xlsx', 'Sheet', 'Weibull Model')
 
-%%% 8. Mortality Summary Tables
+%%% 6. Mortality Summary Tables (Tables 1 & 2 in main text)
 Influenza_Cities(25,2) = 996; %% Add missing Belfast number
 mean_temp = [mean(Influenza_Cities(4:13,2:end),'omitnan')'; mean(Influenza_US(1:8,2)); mean(Influenza_EW(61:70,2))];
 mean_temp = [mean_temp,[mean(Influenza_Cities(14:23,2:end),'omitnan')'; mean(Influenza_US(9:18,2)); mean(Influenza_EW(71:80,2))]];
@@ -211,10 +160,10 @@ t = table({'Belfast', 'Birmingham' ,'Cardiff','Glasgow', 'Liverpool', 'London', 
 ttt.Properties.VariableNames = {'1898-1907',	'1908-1917',	'1918/19',	'1920-29',	'1930-39',	'1940-1949'};
 tt.Properties.VariableNames = {'1898-1907',	'1908-1917',	'1918/19',	'1920-29',	'1930-39',	'1940-1949'};
 
-writetable(tt,'../Figures/Table_1_v2.xlsx', 'Sheet', 'Means', 'Range', 'B2:G12','WriteVariableNames',true)
-writetable(t,'../Figures/Table_1_v2.xlsx', 'Sheet', 'Means', 'Range', 'A2:A12')
-writetable(ttt,'../Figures/Table_1_v2.xlsx', 'Sheet', 'Range', 'Range', 'B2:G12','WriteVariableNames',true)
-writetable(t,'../Figures/Table_1_v2.xlsx', 'Sheet', 'Range', 'Range', 'A2:A12')
+writetable(tt,'../Figures/Table_1.xlsx', 'Sheet', 'Means', 'Range', 'B2:G12','WriteVariableNames',true)
+writetable(t,'../Figures/Table_1.xlsx', 'Sheet', 'Means', 'Range', 'A2:A12')
+writetable(ttt,'../Figures/Table_1.xlsx', 'Sheet', 'Range', 'Range', 'B2:G12','WriteVariableNames',true)
+writetable(t,'../Figures/Table_1.xlsx', 'Sheet', 'Range', 'Range', 'A2:A12')
 
 mean_temp_1848 = [mean(Influenza_EW(1:9,2)),mean(Influenza_EW(10:11,2)),mean(Influenza_EW(12:21,2)),mean(Influenza_EW(22:31,2))];
 mean_temp_1890 = [mean(Influenza_EW(43:52,2)),mean(Influenza_EW(53:54,2)),mean(Influenza_EW(55:64,2)),mean(Influenza_EW(65:74,2))];
@@ -249,13 +198,13 @@ t = table({'England & Wales 1848-49','England & Wales 1890-91','England & Wales 
 tttt.Properties.VariableNames = {'Preceeding decade',	'Main waves',	'Post-pandemic decade I',	'Post-pandemic decade II' };
 tt.Properties.VariableNames = {'Preceeding decade',	'Main waves',	'Post-pandemic decade I',	'Post-pandemic decade II' };
 
-writetable(tt,'../Figures/Table_2_v2.xlsx', 'Sheet', 'Means', 'Range', 'B2:G12','WriteVariableNames',true)
-writetable(t,'../Figures/Table_2_v2.xlsx', 'Sheet', 'Means', 'Range', 'A2:A12')
-writetable(tttt,'../Figures/Table_2_v2.xlsx', 'Sheet', 'Range', 'Range', 'B2:G12','WriteVariableNames',true)
-writetable(t,'../Figures/Table_2_v2.xlsx', 'Sheet', 'Range', 'Range', 'A2:A12')
+writetable(tt,'../Figures/Table_2.xlsx', 'Sheet', 'Means', 'Range', 'B2:G12','WriteVariableNames',true)
+writetable(t,'../Figures/Table_2.xlsx', 'Sheet', 'Means', 'Range', 'A2:A12')
+writetable(tttt,'../Figures/Table_2.xlsx', 'Sheet', 'Range', 'Range', 'B2:G12','WriteVariableNames',true)
+writetable(t,'../Figures/Table_2.xlsx', 'Sheet', 'Range', 'Range', 'A2:A12')
 
 
-%%% Save Results
+%%% 7. Save Results
 
 save('Fitted_Models_v1')
 save('Monte_Carlo_Input','Base_Model')

@@ -1,6 +1,7 @@
 clear
 clc
 close all
+addpath Auxiliary\
 
 load('Fitted_Models_v1')
 Linemarkertypes = {'-p','-o','-h','-s','-d','-*','-v','-^','-+','-x'};

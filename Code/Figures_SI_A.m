@@ -6,6 +6,8 @@ clc
 close all
 load('Fitted_Models_v1.mat')
 load("MC_output_v1.mat")
+addpath Auxiliary\
+
 Load_Data
 
 Linemarkertypes = {'-p','-o','-h','-s','-d','-*','-v','-^','-+','-x'};
