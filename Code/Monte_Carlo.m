@@ -24,7 +24,7 @@ for j = 1:14
     Simulation = simulate_bpareto(10000, alpha, Base_Model(j).dmax, Base_Model(j).dmin);
     
     % Estimate parameters using parallel computing
-    for i = 1:10000
+    parfor i = 1:10000
         theta_hat(i,:,j) = est_parms_bpareto_mc(Simulation(i,:)', Base_Model(j).dmax, Base_Model(j).dmin);
     end
     
