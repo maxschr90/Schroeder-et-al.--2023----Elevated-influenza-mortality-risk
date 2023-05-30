@@ -1,4 +1,7 @@
-%% Monte Carlo
+%% This code runs the Monte Carlo simulation
+%% The default option is to simulate 10000 outbreak histories based on the estimated model parameters.
+%% Be advised that this might take a long time to run (several days on a standard desktop computer or laptop).
+
 clear
 clc
 close all
@@ -9,6 +12,7 @@ load('Monte_Carlo_Input.mat')
 % Add path to auxiliary functions
 addpath Auxiliary\
 
+n_sim = 10000;
 % Loop through each model
 for j = 1:14
     % Store lambda and eta_zero values for the current model
@@ -21,10 +25,10 @@ for j = 1:14
     rng(1001)
     
     % Simulate bpareto distribution
-    Simulation = simulate_bpareto(10000, alpha, Base_Model(j).dmax, Base_Model(j).dmin);
+    Simulation = simulate_bpareto(n_sim, alpha, Base_Model(j).dmax, Base_Model(j).dmin);
     
     % Estimate parameters using parallel computing
-    parfor i = 1:10000
+    parfor i = 1:n_sim
         theta_hat(i,:,j) = est_parms_bpareto_mc(Simulation(i,:)', Base_Model(j).dmax, Base_Model(j).dmin);
     end
     
