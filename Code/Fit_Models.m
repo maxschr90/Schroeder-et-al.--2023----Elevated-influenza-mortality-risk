@@ -133,8 +133,8 @@ T5 = [table({ '\lambda', '\eta_{0}', 'Observations'}') T5];
 writetable(T5,'../Figures/Parameters.xlsx', 'Sheet', 'Weibull Model')
 
 %%% 6. Create  Tables 1 & 2 in main text
-
-Influenza_Cities(25,2) = 996; %% Add missing Belfast number
+% "temp" denotes a placeholder variable
+Influenza_Cities(25,2) = 996; % Add missing Belfast number
 mean_temp = [mean(Influenza_Cities(4:13,2:end),'omitnan')'; mean(Influenza_US(1:8,2)); mean(Influenza_EW(61:70,2))];
 mean_temp = [mean_temp,[mean(Influenza_Cities(14:23,2:end),'omitnan')'; mean(Influenza_US(9:18,2)); mean(Influenza_EW(71:80,2))]];
 mean_temp = [mean_temp,[mean(Influenza_Cities(24:25,2:end),'omitnan')'; mean(Influenza_US(19:21,2)); mean(Influenza_EW(81:82,2))]];
