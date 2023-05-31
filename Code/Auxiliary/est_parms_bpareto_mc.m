@@ -1,4 +1,4 @@
-%% This Function fits the model of the bounded pareto distribution for the monte carlo simulation
+%% This Function fits the model of the bounded pareto distribution for the Monte Carlo simulation
 %% x is a vector of mortality rates
 %% dmin and dmax are the bounds of the bounded pareto distribution
 

@@ -1,5 +1,5 @@
-%%% This function loads the data from the excel file and prepares the
-%%% demographic variables for Table S1
+%% This function loads the data from the excel files
+
 clear    
 citynames = {'Belfast', 'Birmingham' ,'Cardiff', 'Glasgow', 'Liverpool', 'London', 'Manchester', 'Sheffield'};
 Belfast = readtable('../Data/UK_Cities_Mortality_Data.xlsx', 'Sheet', ['Belfast data'], 'Range', 'A1:M63');
@@ -50,7 +50,6 @@ for i=1:6
     cityaverage_EW(1,i) = sum(mpop(Cities_EW).*minfl(Cities_EW),'omitnan')/sum(mpop(Cities_EW),'omitnan');
     cityaverage_UK(1,i) = sum(mpop(:).*minfl(:),'omitnan')/sum(mpop(:),'omitnan');
 end
-
 
 %% Keep Variables for Analysis
 Influenza_US = table2array(readtable('../Data/National_Mortality_Data_US.xls', 'Sheet', ['US'], 'Range', 'A2:B58'));

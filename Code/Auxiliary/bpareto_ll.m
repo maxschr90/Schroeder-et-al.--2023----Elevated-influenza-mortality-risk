@@ -1,16 +1,16 @@
-%% This function evaluates the average log likelihood of the bounded pareto 
+%% This function evaluates the average log likelihood of the bounded pareto given data x, bounds dmax,dmin and vector of parameters y
 function ll = bpareto_ll(y,x,dmax,dmin)
-%% Construct path of tail parameter    
-    ozero = y(2);
-    lambda = y(1);
-    t = [1:size(x,1)]'-1;
-    alpha = 1./(exp(ozero)*exp(-t*lambda));
+%% Construct path of tail parameter
+ozero = y(2);
+lambda = y(1);
+t = [1:size(x,1)]'-1;
+alpha = 1./(exp(ozero)*exp(-t*lambda));
 %% Replace missing values & calculate likelihood
-    x(isnan(x))=pi;
-    lik = (alpha.*dmin.^alpha.*x.^(-alpha-1))./(1-(dmin/dmax).^alpha);
+x(isnan(x))=pi;
+lik = (alpha.*dmin.^alpha.*x.^(-alpha-1))./(1-(dmin/dmax).^alpha);
 %% Drop missing values
-    lik(x==pi)=[];
+lik(x==pi)=[];
 %% Calculate average ll
-    ll = - mean(log(lik));
+ll = - mean(log(lik));
 
 end
