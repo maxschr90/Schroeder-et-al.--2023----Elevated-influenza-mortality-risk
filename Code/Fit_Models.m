@@ -1,13 +1,17 @@
 %%% This code fits the models presented in the main paper and the
 %%% supplementary materials
+
 clear
 clc
 close all
 addpath Auxiliary\
+
 %%% 1. Load Data & Prepare Data
-Load_Data % Loads data for Cities cities from excel file
+
+Load_Data 
 
 %%% 2. Estimate Base Model
+
 dmax_Cities = (max(Influenza_Cities(24:end,2:end)));
 dmin_Cities = (min(Influenza_Cities(24:end,2:end)));
 for n = 1:8
@@ -58,6 +62,7 @@ end
 
 %%% 4. Estimate Weibull Model
 %%% Deaths need to be rescaled for Weibull Distribution
+
 for n = 1:8
     [Weibull_Model(n)] = est_parms_weibull(Influenza_Cities(26:end,n+1)/10, citynames(n));
 end
@@ -74,8 +79,11 @@ end
 [Weibull_Model(n+6)] = est_parms_weibull(Influenza_EW(134:end,2)/10, 'England&Wales 1968');
 
 
-%%% 5. Model Summary Tables
-% Base Model
+%%% 5. Extract the parameters from the estimated models and store them in
+%%% Excel tables
+
+% Base Model (Table SI-B1)
+
 Obs = [sum(Influenza_Cities(26:end,2:9)==Influenza_Cities(26:end,2:9)), sum(Influenza_US(21:end,2)==Influenza_US(21:end,2)),sum(Influenza_EW(12:52,2)==Influenza_EW(12:52,2)),sum(Influenza_EW(55:80,2)==Influenza_EW(55:80,2)),sum(Influenza_EW(83:119,2)==Influenza_EW(83:119,2)),sum(Influenza_EW(123:130,2)==Influenza_EW(123:130,2)),sum(Influenza_EW(133:end,2)==Influenza_EW(133:end,2))];
 
 for n=1:14
@@ -92,7 +100,8 @@ T1 = [table({ '\lambda', '\eta_{0}', 'd_{min}', 'd_{max}', 'Observations'}') T1]
 writetable(T1,'../Figures/Parameters.xlsx', 'Sheet', 'Base Model')
 
 
-% Model with estimated bounds (Table SI-B1)
+% Model with estimated bounds 
+
 for n=1:14
     Parameters(:,n) = round([(Estimated_Bounds_Model(n).lambda) (Estimated_Bounds_Model(n).eta_zero) (Estimated_Bounds_Model(n).dmin) (Estimated_Bounds_Model(n).dmax) ],3);
 end
@@ -108,6 +117,7 @@ writetable(T3,'../Figures/Parameters.xlsx', 'Sheet', 'Estimated Bounds Model')
 
 
 % Weibull Model
+
 Parameters =[];
 for n=1:14
     Parameters(:,n) = round([(Weibull_Model(n).lambda) (Weibull_Model(n).eta_zero)  ],3);
@@ -122,7 +132,8 @@ T5.Properties.VariableNames = names;
 T5 = [table({ '\lambda', '\eta_{0}', 'Observations'}') T5];
 writetable(T5,'../Figures/Parameters.xlsx', 'Sheet', 'Weibull Model')
 
-%%% 6. Mortality Summary Tables (Tables 1 & 2 in main text)
+%%% 6. Create  Tables 1 & 2 in main text
+
 Influenza_Cities(25,2) = 996; %% Add missing Belfast number
 mean_temp = [mean(Influenza_Cities(4:13,2:end),'omitnan')'; mean(Influenza_US(1:8,2)); mean(Influenza_EW(61:70,2))];
 mean_temp = [mean_temp,[mean(Influenza_Cities(14:23,2:end),'omitnan')'; mean(Influenza_US(9:18,2)); mean(Influenza_EW(71:80,2))]];
@@ -204,10 +215,11 @@ writetable(tttt,'../Figures/Table_2.xlsx', 'Sheet', 'Range', 'Range', 'B2:G12','
 writetable(t,'../Figures/Table_2.xlsx', 'Sheet', 'Range', 'Range', 'A2:A12')
 
 
-%%% 7. Save Results
+%%% 7. Save Results from estimation for future use and Monte Carlo
+%%% Simulation
 
-save('Fitted_Models_v1')
-save('Monte_Carlo_Input','Base_Model')
+save('Fitted_Models_v1.mat')
+save('Monte_Carlo_Input.mat','Base_Model')
 clearvars
 
 

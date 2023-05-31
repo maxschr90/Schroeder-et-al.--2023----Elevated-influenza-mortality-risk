@@ -12,7 +12,9 @@ load('Monte_Carlo_Input.mat')
 % Add path to auxiliary functions
 addpath Auxiliary\
 
+% Set number of simulated histories
 n_sim = 10000;
+
 % Loop through each model
 for j = 1:14
     % Store lambda and eta_zero values for the current model

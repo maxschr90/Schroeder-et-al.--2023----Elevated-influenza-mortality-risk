@@ -4,20 +4,19 @@
 clear
 clc
 close all
+
 load('Fitted_Models_v1.mat')
 load("MC_output_v1.mat")
-addpath Auxiliary\
 
-Load_Data
+addpath Auxiliary\
 
 Linemarkertypes = {'-p','-o','-h','-s','-d','-*','-v','-^','-+','-x'};
 Markertypes = {'p','o','h','s','d','*','v','^','+','x','>'};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%% Figure 1 A  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-temp =sumdatatables(table2array(Pneumonia),table2array(Bronchitis));
+temp = sumdatatables(table2array(Pneumonia),table2array(Bronchitis));
 Respiratory = sumdatatables(temp,table2array(Bronchitis));
-
 
 
 figure(1)

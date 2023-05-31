@@ -3,7 +3,7 @@ clc
 close all
 addpath Auxiliary\
 
-load('Fitted_Models_v1')
+load('Fitted_Models_v1.mat')
 Linemarkertypes = {'-p','-o','-h','-s','-d','-*','-v','-^','-+','-x'};
 Markertypes = {'p','o','h','s','d','*','v','^','+','x'};
 
