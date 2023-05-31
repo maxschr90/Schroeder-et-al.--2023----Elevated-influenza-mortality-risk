@@ -1,16 +1,31 @@
-%%% This code fits the models presented in the main paper and the
-%%% supplementary materials
+%% This code fits the models presented in the main paper and the
+%% Supplementary Information
+
+%% Outline of the code:
+%     Load Data: This step loads the required data for the analysis. 
+% 
+%     Estimate Base Model: The code estimates the base model parameters for different locations, including cities and regions. It uses the "est_parms_bpareto" function to estimate the parameters based on the influenza data.
+% 
+%     Estimate Model with Estimated Bounds: This step estimates the model parameters considering estimated upper and lower bounds. The code uses the same "est_parms_bpareto" function as in the previous step but without providing the bounds explicitly.
+% 
+%     Estimate Weibull Model: The code estimates the parameters for a Weibull distribution model using the "est_parms_weibull" function. The influenza data is rescaled before fitting the model.
+% 
+%     Extract Parameters to Excel Tables: This step extracts the estimated parameters from the models and saves them in an Excel file. It creates separate sheets for the base model, estimated bounds model, and Weibull model.
+% 
+%     Create Tables 1 & 2 in the Main Text: This part of the code creates tables that summarize the mean, maximum, and minimum values of influenza data for different time periods and locations. The tables are constructed based on the processed influenza data.
+
+
 
 clear
 clc
 close all
 addpath Auxiliary\
 
-%%% 1. Load Data & Prepare Data
+% 1. Load Data & Prepare Data
 
 Load_Data 
 
-%%% 2. Estimate Base Model
+% 2. Estimate Base Model
 
 dmax_Cities = (max(Influenza_Cities(24:end,2:end)));
 dmin_Cities = (min(Influenza_Cities(24:end,2:end)));
@@ -42,7 +57,7 @@ dmin_EW_1968 = min(Influenza_EW(131:end,2)');
 [Base_Model(n+6)] = est_parms_bpareto(Influenza_EW(134:end,2),dmax_EW_1968,dmin_EW_1968, 'England&Wales 1968');
 
 
-%%% 3. Estimate Model with estimated Bounds
+% 3. Estimate Model with estimated Bounds
 
 for n = 1:8
     [Estimated_Bounds_Model(n)] = est_parms_bpareto(Influenza_Cities(24:end,n+1),[],[], citynames(n));
@@ -60,8 +75,8 @@ end
 [Estimated_Bounds_Model(n+6)] = est_parms_bpareto(Influenza_EW(131:end,2),[],[], 'England&Wales 1968');
 
 
-%%% 4. Estimate Weibull Model
-%%% Deaths need to be rescaled for Weibull Distribution
+% 4. Estimate Weibull Model
+% Deaths need to be rescaled for Weibull Distribution
 
 for n = 1:8
     [Weibull_Model(n)] = est_parms_weibull(Influenza_Cities(26:end,n+1)/10, citynames(n));
@@ -79,8 +94,8 @@ end
 [Weibull_Model(n+6)] = est_parms_weibull(Influenza_EW(134:end,2)/10, 'England&Wales 1968');
 
 
-%%% 5. Extract the parameters from the estimated models and store them in
-%%% Excel tables
+% 5. Extract the parameters from the estimated models and store them in
+% Excel tables
 
 % Base Model (Table SI-B1)
 
@@ -132,7 +147,7 @@ T5.Properties.VariableNames = names;
 T5 = [table({ '\lambda', '\eta_{0}', 'Observations'}') T5];
 writetable(T5,'../Figures/Parameters.xlsx', 'Sheet', 'Weibull Model')
 
-%%% 6. Create  Tables 1 & 2 in main text
+% 6. Create  Tables 1 & 2 in main text
 % "temp" denotes a placeholder variable
 Influenza_Cities(25,2) = 996; % Add missing Belfast number
 mean_temp = [mean(Influenza_Cities(4:13,2:end),'omitnan')'; mean(Influenza_US(1:8,2)); mean(Influenza_EW(61:70,2))];
@@ -215,8 +230,8 @@ writetable(tttt,'../Figures/Table_2.xlsx', 'Sheet', 'Range', 'Range', 'B2:G12','
 writetable(t,'../Figures/Table_2.xlsx', 'Sheet', 'Range', 'Range', 'A2:A12')
 
 
-%%% 7. Save Results from estimation for future use and Monte Carlo
-%%% Simulation
+% 7. Save Results from estimation for future use and Monte Carlo
+% Simulation
 
 save('Fitted_Models_v1.mat')
 save('Monte_Carlo_Input.mat','Base_Model')

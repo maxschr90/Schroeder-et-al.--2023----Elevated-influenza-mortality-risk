@@ -1,4 +1,18 @@
-%% This function loads the data from the excel files
+%% This function loads the data from the excel files and prepares the data for further analysis
+%% Outline of the code:
+%     Load Data: The code loads data from different sheets of an Excel files using the readtable function. 
+% 
+%     Create Data Tables: The code creates separate data tables for different categories, such as Influenza, Pneumonia, Bronchitis, Bronchio_pneumonia, Other_respiratory, Infant_mortality, and Population. Each table contains the data for different cities, with city names as variable names.
+% 
+%     Calculate Relative Influenza & Respiratory Diseases for Outbreak Years: The code calculates the relative influenza and respiratory disease rates for specific outbreak years. It computes the ratio of the disease rates in outbreak years to the average rates in the years before and after the outbreak. The results are stored in the matrices Excess_Influenza and Excess_Resp.
+% 
+%     Write Relative Mortality to Excel: The code writes the matrices Excess_Influenza and Excess_Resp to an Excel file called "Relative_Mortality.xlsx" in separate sheets named "Influenza" and "Respiratory," respectively.
+% 
+%     Calculate City Averages: The code calculates the average influenza rates for different periods. It computes the city averages for each period based on population and influenza rate data. The results are stored in the vectors cityaverage_EW and cityaverage_UK for different periods.
+% 
+%     Keep Variables for Analysis: The code loads additional data from other Excel files, including national mortality data for the US (Influenza_US), England & Wales (Influenza_EW), and compiles city-level mortality data (Influenza_Cities). It also loads infant mortality data for England & Wales (Infant_mortality_EW). The code calculates the average infant mortality rate and stores it in the vector average_infant_mort.
+% 
+%     Clean Up: The code clears unnecessary variables using the clearvars function, except for the variables Influenza_US, Influenza_EW, Influenza_Cities, years, citynames, Pneumonia, Bronchitis, Bronchio_pneumonia, Resp, Infant_mortality, and average_infant_mort.
 
 clear    
 citynames = {'Belfast', 'Birmingham' ,'Cardiff', 'Glasgow', 'Liverpool', 'London', 'Manchester', 'Sheffield'};
@@ -38,6 +52,8 @@ Excess_Resp(6,1) = NaN;
 
 writematrix(Excess_Influenza,'../Data/Relative_Mortality.xlsx','Sheet','Influenza','Range','B2:I7')
 writematrix(Excess_Resp,'../Data/Relative_Mortality.xlsx','Sheet','Respiratory','Range','B2:I7')
+
+%% Calculate city average influenza for E&W and UK
 
 periods = [nan(3,1);ones(10,1);ones(10,1)*2;ones(2,1)*3;ones(10,1)*4;ones(10,1)*5;ones(10,1)*6];
 Cities_EW=[2,3,4:8];
