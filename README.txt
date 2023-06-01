@@ -2,7 +2,7 @@ This repository contains the replication files for "An extended period of elevat
 
 Suggested citation: 
 
-Schroeder, Max, Spyridon Lazarakis, Rebecca Mancy, and Konstantinos Angelopoulos. "An extended period of elevated influenza mortality risk follows the main waves of influenza pandemics." Social Science & Medicine (2023): 115975.
+Schroeder, M., Lazarakis, S., Mancy, R., & Angelopoulos, K. (2023). An extended period of elevated influenza mortality risk follows the main waves of influenza pandemics. Social Science & Medicine, 115975.
 
 DOI of paper: 
 
