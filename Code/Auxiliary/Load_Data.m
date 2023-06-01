@@ -49,9 +49,11 @@ for i =1:length(outbreakyears)
     Excess_Resp(i,:) = Resp(ind,2:end)./mean([Resp(ind-1,2:end); Resp(ind+1,2:end)],'omitnan');
 end
 Excess_Resp(6,1) = NaN;
+Excess_Influenza = [outbreakyears,Excess_Influenza];
+Excess_Resp = [outbreakyears,Excess_Resp];
 
-writematrix(Excess_Influenza,'../Code/SI_Figure_A2_Data.xlsx','Sheet','Influenza','Range','B2:I7')
-writematrix(Excess_Resp,'../Code/SI_Figure_A2_Data.xlsx','Sheet','Respiratory','Range','B2:I7')
+writematrix(Excess_Influenza,'../Code/SI_Figure_A2_Data.xlsx','Sheet','Influenza','Range','A2:I7')
+writematrix(Excess_Resp,'../Code/SI_Figure_A2_Data.xlsx','Sheet','Respiratory','Range','A2:I7')
 
 %% Calculate city average influenza for E&W and UK
 
