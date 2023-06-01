@@ -1,13 +1,17 @@
 This folder contains the files necessary for replicating the modeling analysis.
 
-To replicate the analysis in the main paper and the Supplementary Information proceed as follows:
+To replicate the analysis in the main paper and the Supplementary Information, proceed as follows:
 
-	1. Run the function "Fit_Model.m" which fits all the models mentioned in the main text and the Supplementary Information. All relevant results and data are stored in 		   a .mat file called 'Fitted_Models_v1.mat' which is called by later functions creating the figures. It also stores the parameters of the base model in the file	   	   "Monte_Carlo_Input.mat" which is used in the Monte Carlo simulations.
+	1. Run the function "Fit_Model.m" which fits all the models mentioned in the main text and the Supplementary Information. All relevant results and data are stored in
+	 		   a '.mat' file called 'Fitted_Models_v1.mat' which is called by later functions creating the figures. It also stores the parameters of the base model in the file	   	   
+	 		   "Monte_Carlo_Input.mat" which is used in the Monte Carlo simulations. This file also generates the Excel spreadsheet file SI_Figure_A2_Data.xlsx, used in 
+	 		   the construction of Figure A-2 by the R script Fig_Scatter.R.
 	
-	2. Run the function "Monte_Carlo.m" to run the Monte Carlo simulations using the parameters saved in "Monte_Carlo_Input.mat". The procedure outputs the simulation 	    	   results to "MC_output_v1.mat". Running the Monte Carlo simulation can take considerable ammount of time and is therefore not recommended. 
-	   This repo comes with a finished version of the Monte Carlo simulation which can be used to create the relevant figures.
+	2. Run the function "Monte_Carlo.m" to run the Monte Carlo simulations using the parameters saved in "Monte_Carlo_Input.mat". The procedure outputs the simulation
+	 	    	   results to "MC_output_v1.mat". Running the Monte Carlo simulation can take considerable ammount of time and is therefore not recommended. 
+	   This repo includes with a finished version of the Monte Carlo simulation which can be used to create the relevant figures.
 
-	3. You can create the Figures used in the main text and the supplementary by running the functions "Figure_*.m", "Fig_Scatter.R" and "Figures_SI_*.m".
+	3. You can create the Figures used in the main text and the supplementary by running the functions "Figure_*.m", "Figures_SI_*.m" and the R script "Fig_Scatter.R".
 	   
 
 All other functions are supplementary functions that are called in the execution of the main functions. They are stored in the "Auxiliary" subfolder.
